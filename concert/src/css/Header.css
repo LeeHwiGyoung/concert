@@ -1,0 +1,10 @@
+.header {
+    display: flex;
+    flex-direction: row-reverse;
+    height: 50px;
+    margin-top: 0px;
+}
+
+.header > ul > li {
+    margin : 0px 20px 0px 20px
+}

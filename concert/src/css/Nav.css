@@ -1,0 +1,18 @@
+.nav {
+
+}
+
+.nav > ul {
+    list-style: none;
+    display : flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.nav > ul > li {
+    margin : 0 5%
+}
+
+.nav > ul  :hover {
+    
+}

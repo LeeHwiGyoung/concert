@@ -60,7 +60,7 @@ function Login() {
                 <button type = "button" id ="apple">A</button>
             </div>
             <div id = "signUp">
-                <a id ="join" href = "/">회원가입 하기</a>
+                <a id="join" href = "/join">회원가입 하기</a>
             </div>
             <div id = "find">
                 <ul>

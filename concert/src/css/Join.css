@@ -1,0 +1,47 @@
+.joinWrap {
+    max-width : 400px;
+    text-align: center;
+    margin : 100px auto;
+}
+.terms {
+    height : 300px;
+    border : 1px solid black;
+}
+.joinInput  {
+    text-align: left;
+}
+.joinInput > label {
+    font-size : 15px;
+}
+.joinInput > input {
+    width : 100%;
+    font-size: 18px;
+    padding : 10px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+.terms {
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 200px;
+}
+.join {
+    width: 100%;
+    display: inline-block;
+    border : 1px solid black;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    padding : 10px;
+    text-decoration: none;
+    color : white;
+    background-color: black;
+}
+
+.join:visited{
+    color : white;
+}
+
+.terms{
+    border: 1px black solid;
+    height : 200px;
+}

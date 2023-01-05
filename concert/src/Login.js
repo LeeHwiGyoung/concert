@@ -1,34 +1,50 @@
-import { useState } from "react";
+import axios from "axios";
+import {  useState } from "react";
+import { useNavigate } from "react-router-dom";
 import './css/Login.css'
 
 function Login() {
-
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState("") 
     const [password, setPassword] = useState("")
-
-    const  data = {   
+    const [loginErrMsg , setLoginErrMsg] = useState(false) 
+    const  data = JSON.stringify({   
         "email" : email,
         "password" : password 
+    });
+
+    const navigate = useNavigate();
+
+    const postLogin = async () => {
+        const headers = {
+            "Content-Type" : "application/json"
+        }   
+        axios.post("https://52be071c-beda-400a-9418-11aeb3365269.mock.pstmn.io/login", data
+             , headers)
+            .then(res =>  {
+                console.log(res)
+                console.log(res.data)
+                if(res.data.status === '200'){
+                    localStorage.setItem('accesstoken' , res.data.accesstoken);
+                    localStorage.setItem('expiredTime', res.data.expiredTime);
+                    localStorage.setItem('refreshToken', res.data.refreshToken); 
+                    navigate("/")
+                }
+                if(res.data.status === '400')
+                {
+                    setLoginErrMsg(true);
+                    setPassword("");
+                }
+            })
+            .then(err => {
+               console.log(err);
+            })
     }
+
+   
 
     const loginSubmit = async (event) => {
         event.preventDefault();
-        console.log(email, password)
-        /*fetch ('https://abf7b030-3326-41fe-8870-3487174ce715.mock.pstmn.io/login' , {
-             method : "POST",
-             headers : {
-
-             },
-             body : JSON.stringify(data)
-             })
-        .then(res => {
-            console.log(res)
-            return res.json();
-        })
-        .then(res=> {
-            console.log(res);
-        });*/
-
+        postLogin();
     }
 
 
@@ -47,8 +63,8 @@ function Login() {
             <form id = "loginForm">
                 <input type = "text" id = "idInput" placeholder="Email"  onChange = {handleEmail}/>
                 <br/>
-                <input type = "password" id = "passwordInput"placeholder="password" onChange = {handlePassword}/>
-                <br/>
+                <input type = "password" id = "passwordInput"placeholder="password" onChange = {handlePassword} value = {password}/>
+                <div className= {loginErrMsg ? "errmsg" : "nonemsg"}>아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.</div>
                 <button type = "submit" id = "loginBtn" onClick={loginSubmit}>로그인</button>
             </form>
             <hr/>

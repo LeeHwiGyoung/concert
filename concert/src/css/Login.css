@@ -1,5 +1,6 @@
 #loginWrap {
     max-width: 400px;
+    background-color: white;
     margin : 100px auto;
     text-align: center;
 }
@@ -38,6 +39,7 @@
     height : 50px;
     margin: 0 10px 0 10px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 #signUp {
@@ -47,6 +49,7 @@
 #join {
     width: 100%;
     display: inline-block;
+    box-sizing: border-box;
     border : 1px solid black;
     border-radius: 20px;
     font-size: 1.2rem;
@@ -78,4 +81,15 @@
 }
 #findPassword {
     border-left : 1px solid gray;
+}
+
+.errmsg {
+    color : red;
+    font-size: 12px;
+    text-align: start;
+    margin-bottom: 8px;
+}
+
+.nonemsg {
+    display : none 
 }

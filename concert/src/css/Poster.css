@@ -1,11 +1,33 @@
-ul {
+.poster > ul {
     list-style: none;
     display: flex;
-
 }
 
 .poster > ul > li > img {
     margin : 0 50px 0px 0px;
     width: 275px;
     height : 400px;
+}
+
+#leftBtn {
+    display: flex;
+    align-items: center;
+    
+}
+.leftImg{
+    width : 50px;
+    height : 50px;
+    cursor : pointer;
+}
+
+.hidden {
+    width : 50px;
+    height: 50px;
+    visibility: hidden;
+}
+
+
+#rightBtn{
+    width : 5vw;
+    background-color: black;
 }

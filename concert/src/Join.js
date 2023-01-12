@@ -1,9 +1,9 @@
 import { type } from '@testing-library/user-event/dist/type';
 import { useCallback, useState } from 'react';
 import './css/Join.css'
+import axios from 'axios';
 
 function Join() {
-
     const [email, setEmail] = useState(""); //이메일 input value 값을 저장할 state
     const [password , setPassword] = useState(""); //비밀번호 input value 값을 저장할 state
     const [checkPassword, setCheckPassword] = useState(""); //비밀번호 확인 input value 값을 저장할 state
@@ -18,6 +18,17 @@ function Join() {
     const [samePassword, setSamePassword] = useState(true); //비밀번호와 비밀번호 확인 값이 같은지
     const [numberKeyPress , setNumberKeyPress] = useState(false); //키보드  숫자 자판 눌렀을 
     
+
+    const data = JSON.stringify(
+        {
+        "userEmail": email,
+        "password": password,
+        "userNickname": nickname,
+        "userName": name,
+        "userPhone": phoneNumber,
+        "userBirth": `${birth.slice(0,4)}-${birth.slice(4,6)}-${birth.slice(6,8)}`
+    })
+
     const onChangeEmail = (event) => {
         setEmail(event.target.value);
     }
@@ -61,11 +72,13 @@ function Join() {
     const onChangeBirth = (event) => {
         if(numberKeyPress === true && event.target.value.length <= 8)
             setBirth(event.target.value);
-    }
+    } 
 
     const onChangeGender = (event) => {
         setGender(event.target.value);
     }
+
+
 
     const checkMatchEmail = () => {
         const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
@@ -98,8 +111,11 @@ function Join() {
         e.preventDefault();
     }
 
+  
+
     const submitJoin = (e) =>{
         e.preventDefault();
+        console.log(data)
         if(email ===  "") { //이메일이 공백이면
             alert("이메일을 입력하세요.");
         }
@@ -138,57 +154,23 @@ function Join() {
         }
         else{
             console.log("api연결")
+            axios.post("http://13.124.105.142:8080/users/join",
+                data
+             , {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then((res)=>
+                console.log(res)
+            )
+            .catch((err)=>
+                console.log(err)
+            )
         }
-
-
         console.log(e);
     }
-    /*
-       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-       RFC5322를 만족하는 JS 정규식을 갖고옴
-         1 : [^<>()\[\]\\.,;:\s@"]+ == < > ( )  [ ] \ . , ; : 공백문자 @ 을 제외한 문자들이 1개 이상
-        2 : .이 들어가고 위의 문자를 제외한 문자열이 1개이상
-        3 : 1, 2 를 만족하는 문자열이 0개 이상
-        4 : ".+"  모든 문자열이 1개 이상 ?
-        1 ,2 ,3 ,4 가 골뱅이 이전 문자열
-        5 : @
-        6:
-    */
-
-
-
-
-    /*const phoneAuth = (e) => {
-        e.preventDefault();
-        const IMP = window.IMP;
-        const identification = process.env.REACT_APP_PHONE_IDENTIFICATION
-        IMP.init(identification);
-        
-        const data = {
-            merchant_uid: `mid_${new Date().getTime()}` , // 주문번호
-            company: '내한공연',                           // 회사명 또는 URL
-            carrier: 'SKT',                              // 통신사
-            name: name,                                // 이름
-            phone: phoneNumber,                        // 전화번호
-        };
-       
-        IMP.certification(data,callback)
-
-        function callback(response) {
-            const {
-                success,
-                merchant_uid,
-                error_msg
-            } = response;
-
-            if(success){
-                alert('본인인증 성공');
-            }else{
-                alert(`본인 인증 실패 : ${error_msg}`);
-            }
-        }
-    }
-    */
+   
 
     const phoneAuth = (e) => {  
         e.preventDefault();

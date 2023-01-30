@@ -2,7 +2,10 @@ import axios from "axios";
 import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './css/Login.css'
-
+/*
+1. access token은 JS private instance 에 보관.
+2. refresh token은 http only, same site strict 로 설정된 cookie 에 보관.
+ */
 function Login() {
     const [email, setEmail] = useState("") 
     const [password, setPassword] = useState("")

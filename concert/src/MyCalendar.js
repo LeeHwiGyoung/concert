@@ -1,28 +1,60 @@
-import React, { Component } from 'react';
-import FullCalendar from '@fullcalendar/react';
+import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction"
 import dayGridPlugin from '@fullcalendar/daygrid';
-import './css/Calender.css'
+import { useEffect, useState } from "react";
+import mocksdata from './MOCK_DATA.json';
 
-class MyCalendar extends Component {
-    render() {
-        return (
-          <div className="MyCalender">
-            <FullCalendar 
-              initialView="dayGridMonth" 
-              id = "Calendar"
-              plugins={[ dayGridPlugin , interactionPlugin ]}
-              events={[
-                {title : 'Meeting' , start : new Date() }
-              ]}
-              dateClick = {this.handleDateClick}
+function MyCalendar() {
+    const [event , setEvents] = useState([]);
+
+    const handleDateClick = (arg) => { // bind with an arrow function
+        alert(arg.dateStr)
+    }
+    
+    const handleEventEnter = (e) => {
+        console.log(e)
+    }
+
+    const handleEventClick = (e) => {
+        console.log(e)
+        alert(e.event._def.publicId + e.event._def.title)
+    }
+
+    const changeProperty = () => {
+        let mockdata = mocksdata.map((item)=>{
+            let obj = {
+                id : item.id,
+                title : item.title,
+                start : item.start_date,
+                end : item.end_date,
+            }  
+            return obj;
+        })
+        return mockdata;
+    }
+
+    useEffect( () => {
+        const events = changeProperty();
+        setEvents(events);
+    }, [] );
+
+    return (
+        <>
+            <FullCalendar
+                initialView="dayGridMonth" 
+                plugins={[ dayGridPlugin , interactionPlugin ]}
+                timeZone = 'Asia/Seoul'
+                events = {event}
+                height = {1200}
+                contentHeight = {1000}
+                dayMaxEvents = {3}
+                dateClick = {handleDateClick}
+                eventClick = {handleEventClick}
+                eventMouseEnter = {handleEventEnter}
             />
-          </div>
-        );
-    }
+        </>
+    )
 
-    handleDateClick = (arg) => { // bind with an arrow function
-      alert(arg.dateStr)
-    }
 }
+
 export default MyCalendar;

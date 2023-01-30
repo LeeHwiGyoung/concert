@@ -26,7 +26,7 @@ function MyCalendar() {
                 id : item.id,
                 title : item.title,
                 start : item.start_date,
-                end : item.end_date,
+                end : item.end_date + "T23:59:00",
             }  
             return obj;
         })
@@ -35,6 +35,7 @@ function MyCalendar() {
 
     useEffect( () => {
         const events = changeProperty();
+        console.log(events)
         setEvents(events);
     }, [] );
 

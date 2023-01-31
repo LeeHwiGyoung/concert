@@ -2,11 +2,12 @@ import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction"
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useEffect, useState } from "react";
+import CalendarModal from "./CalendarModal";
 import mocksdata from './MOCK_DATA.json';
 
 function MyCalendar() {
     const [event , setEvents] = useState([]);
-
+    const [openModal, setOpenModal] = useState(false);
     const handleDateClick = (arg) => { // bind with an arrow function
         alert(arg.dateStr)
     }
@@ -17,7 +18,8 @@ function MyCalendar() {
 
     const handleEventClick = (e) => {
         console.log(e)
-        alert(e.event._def.publicId + e.event._def.title)
+        setOpenModal(true)
+        //alert(e.event._def.publicId + e.event._def.title)
     }
 
     const changeProperty = () => {
@@ -41,6 +43,7 @@ function MyCalendar() {
 
     return (
         <>
+            { openModal && <CalendarModal closeModal={setOpenModal}/> }
             <FullCalendar
                 initialView="dayGridMonth" 
                 plugins={[ dayGridPlugin , interactionPlugin ]}
@@ -53,6 +56,7 @@ function MyCalendar() {
                 eventClick = {handleEventClick}
                 eventMouseEnter = {handleEventEnter}
             />
+            
         </>
     )
 

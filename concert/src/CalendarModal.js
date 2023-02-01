@@ -1,16 +1,44 @@
+import { useEffect , useRef } from 'react';
 import './css/modal.css'
-function CalendarModal ({closeModal}) {
+function CalendarModal ({closeModal, title ,children}) {
+    const modalRef = useRef();
+    useEffect ( ()=> {
+        document.addEventListener('mousedown' , handleMouseDown);
+        return ()=> { 
+            console.log("modal 사라짐")
+            document.removeEventListener('mousedown' , handleMouseDown);
+        }
+    }, [])
+    
+    const bodychange = () => {
+        const body = document.getElementById('body');
+        body.classList.remove('overflowHidden')
+    }
     const onClickXBtn = () =>{
         closeModal(false);
-        console.log(closeModal)
+        bodychange()
+    }   
+
+    const handleMouseDown = (e) => {
+        if (modalRef && !modalRef.current.contains(e.target)) {
+            closeModal(false);
+            bodychange()
+          }
+          else {
+            closeModal(true);
+          }
+        //if(e.target.offsetParent === modalRef)
     }
 
+
     return (
-            <div className="modalContainer">
-                <button onClick={onClickXBtn}>X</button>
-                <div className="title">This is modal title</div>
-                <div className="body">This is modal body</div>
-                <div className="footer">This is modal footer</div>
+            <div className="modalContainer" ref = {modalRef}>
+                <button onClick={onClickXBtn} className = "close">X</button>
+                <div className="modalTitle"><h1>{title}</h1></div>
+                <div className="modalBody">
+                    {children}
+                </div>
+                <div className="modalFooter">This is modal footer</div>
             </div>
     )
 }

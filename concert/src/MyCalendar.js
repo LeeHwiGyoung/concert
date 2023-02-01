@@ -1,24 +1,26 @@
 import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction"
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { useEffect, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 import CalendarModal from "./CalendarModal";
 import mocksdata from './MOCK_DATA.json';
+import { scryRenderedComponentsWithType } from "react-dom/test-utils";
 
 function MyCalendar() {
-    const [event , setEvents] = useState([]);
+    const [event , setEvents] = useState({});
     const [openModal, setOpenModal] = useState(false);
-    const handleDateClick = (arg) => { // bind with an arrow function
-        alert(arg.dateStr)
-    }
-    
+    const [content , setContent] = useState({});
     const handleEventEnter = (e) => {
-        console.log(e)
     }
 
     const handleEventClick = (e) => {
         console.log(e)
         setOpenModal(true)
+        const id =  parseInt(e.event._def.publicId) //string을 number로 바꿔줌 
+        const result = event.filter( (el) => el.id === id) //클릭한 e와 event를 비교하여 같은 id 값을 가진 정보를  result에 저장 
+        setContent(result[0]) //result[0] 즉 id가 일치하는 events를 props의 content로 넘겨주기 위해 저장
+        const body = document.getElementById("body") //body에 ClassName을 추가하여 modal과 구분하기 위해
+        body.classList.add('overflowHidden')
         //alert(e.event._def.publicId + e.event._def.title)
     }
 
@@ -29,6 +31,10 @@ function MyCalendar() {
                 title : item.title,
                 start : item.start_date,
                 end : item.end_date + "T23:59:00",
+                runtime : item.time,
+                singer : item.singer,
+                place : item.place,
+                img : "images/poster2.jpeg",
             }  
             return obj;
         })
@@ -43,20 +49,23 @@ function MyCalendar() {
 
     return (
         <>
-            { openModal && <CalendarModal closeModal={setOpenModal}/> }
             <FullCalendar
                 initialView="dayGridMonth" 
                 plugins={[ dayGridPlugin , interactionPlugin ]}
                 timeZone = 'Asia/Seoul'
                 events = {event}
-                height = {1200}
-                contentHeight = {1000}
                 dayMaxEvents = {3}
-                dateClick = {handleDateClick}
                 eventClick = {handleEventClick}
                 eventMouseEnter = {handleEventEnter}
             />
-            
+            {openModal && <CalendarModal closeModal={setOpenModal} title = {content.title}>
+                <img src={content.img} alt = ""/>
+                    <div className = "concertContent">
+                     <p> 가수 : {content.singer}</p>
+                     <p> 시간 : {content.runtime}</p>
+                     <p> 장소 : {content.place}</p> 
+                </div> 
+            </CalendarModal>}
         </>
     )
 

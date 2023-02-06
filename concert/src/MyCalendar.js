@@ -4,10 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { createElement, useEffect, useState } from "react";
 import CalendarModal from "./CalendarModal";
 import mocksdata from './MOCK_DATA.json';
-import { scryRenderedComponentsWithType } from "react-dom/test-utils";
 
 function MyCalendar() {
-    const [event , setEvents] = useState({});
+    const [event , setEvents] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [content , setContent] = useState({});
     const handleEventEnter = (e) => {
@@ -23,7 +22,8 @@ function MyCalendar() {
         body.classList.add('overflowHidden')
         //alert(e.event._def.publicId + e.event._def.title)
     }
-
+ /* 
+    */
     const changeProperty = () => {
         let mockdata = mocksdata.map((item)=>{
             let obj = {
@@ -35,6 +35,7 @@ function MyCalendar() {
                 singer : item.singer,
                 place : item.place,
                 img : "images/poster2.jpeg",
+                
             }  
             return obj;
         })
@@ -49,7 +50,7 @@ function MyCalendar() {
 
     return (
         <>
-            <FullCalendar
+            <FullCalendar    
                 initialView="dayGridMonth" 
                 plugins={[ dayGridPlugin , interactionPlugin ]}
                 timeZone = 'Asia/Seoul'
@@ -62,8 +63,10 @@ function MyCalendar() {
                 <img src={content.img} alt = ""/>
                     <div className = "concertContent">
                      <p> 가수 : {content.singer}</p>
-                     <p> 시간 : {content.runtime}</p>
-                     <p> 장소 : {content.place}</p> 
+                     <p> 공연 기간 : {content.start}  ~ {content.end}</p>
+                     <p> 공연 시간 : {content.runtime}</p>
+                     <p> 장소 : {content.place}</p>  
+                     <p> 예매 사이트 : </p>
                 </div> 
             </CalendarModal>}
         </>

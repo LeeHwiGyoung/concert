@@ -1,7 +1,7 @@
 .modalContainer {
+    overflow-y: auto;
     width : 1000px;
     top : 50%;
-    z-index: 10;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
@@ -44,4 +44,7 @@
 .concertContent {
     width : 600px;
     margin-left : 20px;
+}
+
+.modalFooter {
 }

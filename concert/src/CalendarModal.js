@@ -1,6 +1,6 @@
 import { useEffect , useRef } from 'react';
 import './css/modal.css'
-function CalendarModal ({closeModal, title ,children}) {
+function CalendarModal ({closeModal, title , children}) {
     const modalRef = useRef();
     useEffect ( ()=> {
         document.addEventListener('mousedown' , handleMouseDown);
@@ -38,7 +38,7 @@ function CalendarModal ({closeModal, title ,children}) {
                 <div className="modalBody">
                     {children}
                 </div>
-                <div className="modalFooter">This is modal footer</div>
+                <div className="modalFooter"> 공연 후기 게시판</div>
             </div>
     )
 }

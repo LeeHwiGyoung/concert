@@ -24,7 +24,7 @@ function Join() {
         "userEmail": email,
         "password": password,
         "userNickname": nickname,
-        "userName": name,
+        "name": name,
         "userPhone": phoneNumber,
         "userBirth": `${birth.slice(0,4)}-${birth.slice(4,6)}-${birth.slice(6,8)}`
     })
@@ -154,7 +154,7 @@ function Join() {
         }
         else{
             console.log("api연결")
-            axios.post("http://13.124.105.142:8080/users/join",
+            axios.post("http://3.37.69.149:8080/users/join",
                 data
              , {
                 headers: {

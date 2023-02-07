@@ -2,10 +2,7 @@ import axios from "axios";
 import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './css/Login.css'
-/*
-1. access token은 JS private instance 에 보관.
-2. refresh token은 http only, same site strict 로 설정된 cookie 에 보관.
- */
+
 function Login() {
     const [email, setEmail] = useState("") 
     const [password, setPassword] = useState("")
@@ -18,7 +15,7 @@ function Login() {
     const navigate = useNavigate();
 
     const postLogin = async () => {
-        axios.post("http://13.124.105.142:8080/users/login", data
+        axios.post("http://3.37.69.149:8080/users/login", data
              ,   { 
                 headers: {
                 'Content-Type': 'application/json'

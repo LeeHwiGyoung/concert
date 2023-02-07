@@ -1,10 +1,16 @@
 import axios from "axios";
 import {  useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import './css/Login.css'
+import {changeEmail} from "./loginSlice"
+import { getCookie, setCookie } from "../../components/cookie";
+import './Login.css'
 
 function Login() {
-    const [email, setEmail] = useState("") 
+    const email = useSelector((state) => state.login.email)
+    const dispatch = useDispatch()
+
+    //const [email, setEmail] = useState("") 
     const [password, setPassword] = useState("")
     const [loginErrMsg , setLoginErrMsg] = useState(false) 
     const  data = JSON.stringify({   
@@ -13,7 +19,20 @@ function Login() {
     });
 
     const navigate = useNavigate();
-
+    const onLoginSuccess = (res) => {
+        if (res.data.status === 'OK'){
+            const {accessToken} =  res.data.data.accessToken;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            setCookie('refreshToken', res.data.data.refreshToken , {
+                httpOnly: true,
+                path: "/",
+                secure: true,
+                sameSite: "None"}); 
+            console.log(getCookie("refreshToken"));
+            navigate("/")
+        }
+    }
+   
     const postLogin = async () => {
         axios.post("http://3.37.69.149:8080/users/login", data
              ,   { 
@@ -21,16 +40,7 @@ function Login() {
                 'Content-Type': 'application/json'
             }
         })
-            .then(res =>  {
-                console.log(res)
-                console.log(res.data)
-                if(res.data.status === 'OK'){
-                    localStorage.setItem('accesstoken' , res.data.data.accessToken);
-                    localStorage.setItem('expiredTime', res.data.data.expiredTime);
-                    localStorage.setItem('refreshToken', res.data.data.refreshToken); 
-                    navigate("/")
-                }
-            })
+            .then(onLoginSuccess)
             .then(err => {
                console.log(err);
             })
@@ -45,7 +55,7 @@ function Login() {
 
 
     const handleEmail = (event) => {    
-        setEmail(event.target.value);
+        dispatch(changeEmail(event.target.value));
     }
     
     const handlePassword = (event) =>{
@@ -89,3 +99,6 @@ function Login() {
   }
   
   export default Login;
+
+
+  

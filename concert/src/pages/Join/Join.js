@@ -1,6 +1,6 @@
 import { type } from '@testing-library/user-event/dist/type';
 import { useCallback, useState } from 'react';
-import './css/Join.css'
+import './Join.css'
 import axios from 'axios';
 
 function Join() {

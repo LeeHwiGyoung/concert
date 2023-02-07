@@ -1,4 +1,4 @@
-import './css/Poster.css'
+import './Poster.css'
 import { useState } from "react";
 
 function Poster() {

@@ -1,5 +1,5 @@
-import Nav from './Nav.js';
-import Header from './Header.js';
+import Nav from './components/Nav.js';
+import Header from './components/Header.js';
 
 function Community(){
     return (

@@ -2,17 +2,16 @@ import axios from "axios";
 import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {changeEmail} from "./loginSlice"
+import {inputEmail, inputPassword} from "./loginSlice"
 import { getCookie, setCookie } from "../../components/cookie";
 import './Login.css'
 
 function Login() {
-    const email = useSelector((state) => state.login.email)
-    const dispatch = useDispatch()
-
-    //const [email, setEmail] = useState("") 
-    const [password, setPassword] = useState("")
-    const [loginErrMsg , setLoginErrMsg] = useState(false) 
+    const email = useSelector((state) => state.login.email);
+    const password = useSelector((state) => state.login.password);
+    const loginErrMsg = useSelector((state) => state.login.loginErrMsg);
+    const dispatch = useDispatch();
+    
     const  data = JSON.stringify({   
         "userEmail" : email,
         "password" : password 
@@ -55,11 +54,11 @@ function Login() {
 
 
     const handleEmail = (event) => {    
-        dispatch(changeEmail(event.target.value));
+        dispatch(inputEmail(event.target.value));
     }
     
     const handlePassword = (event) =>{
-        setPassword(event.target.value);
+        dispatch(inputPassword(event.target.value));
     }
 
 

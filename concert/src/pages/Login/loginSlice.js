@@ -3,20 +3,24 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   email : "",
   password : "",
-  loginErrMsg : "false",
+  loginErrMsg : false,
 }
 
 export const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    changeEmail: (state, action) => {
+    inputEmail: (state, action) => {
       state.email = action.payload
     },
+    inputPassword: (state ,action) => {
+        state.password = action.payload;
+    },
+
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { changeEmail } = loginSlice.actions //reducer의 actions을 export
+export const { inputEmail, inputPassword } = loginSlice.actions //reducer의 actions을 export
 
 export default loginSlice.reducer

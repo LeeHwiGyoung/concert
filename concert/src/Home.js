@@ -8,7 +8,6 @@ function Home() {
     return (
       <div id = "wrap">
         <Header />
-        <h1>Home</h1>
         <Nav />
         <MyCalendar />
         <Poster />

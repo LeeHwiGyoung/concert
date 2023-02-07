@@ -8,31 +8,27 @@ function Login() {
     const [password, setPassword] = useState("")
     const [loginErrMsg , setLoginErrMsg] = useState(false) 
     const  data = JSON.stringify({   
-        "email" : email,
+        "userEmail" : email,
         "password" : password 
     });
 
     const navigate = useNavigate();
 
     const postLogin = async () => {
-        const headers = {
-            "Content-Type" : "application/json"
-        }   
-        axios.post("https://52be071c-beda-400a-9418-11aeb3365269.mock.pstmn.io/login", data
-             , headers)
+        axios.post("http://13.124.105.142:8080/users/login", data
+             ,   { 
+                headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(res =>  {
                 console.log(res)
                 console.log(res.data)
-                if(res.data.status === '200'){
-                    localStorage.setItem('accesstoken' , res.data.accesstoken);
-                    localStorage.setItem('expiredTime', res.data.expiredTime);
-                    localStorage.setItem('refreshToken', res.data.refreshToken); 
+                if(res.data.status === 'OK'){
+                    localStorage.setItem('accesstoken' , res.data.data.accessToken);
+                    localStorage.setItem('expiredTime', res.data.data.expiredTime);
+                    localStorage.setItem('refreshToken', res.data.data.refreshToken); 
                     navigate("/")
-                }
-                if(res.data.status === '400')
-                {
-                    setLoginErrMsg(true);
-                    setPassword("");
                 }
             })
             .then(err => {

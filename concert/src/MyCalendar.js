@@ -35,7 +35,7 @@ function MyCalendar() {
                 singer : item.singer,
                 place : item.place,
                 img : "images/poster2.jpeg",
-                
+                color : `rgb(121,123,322,0.${item.id})`
             }  
             return obj;
         })

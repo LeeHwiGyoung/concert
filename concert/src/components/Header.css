@@ -16,6 +16,9 @@
     color : black;
 }
 
+.header > ul > li > p {
+    margin: 0;
+}
 .header > ul > li > a  :visited {
     color : black;
 }

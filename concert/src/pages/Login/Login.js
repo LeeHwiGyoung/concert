@@ -2,14 +2,18 @@ import axios from "axios";
 import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {inputEmail, inputPassword} from "./loginSlice"
-import { getCookie, setCookie } from "../../components/cookie";
+import { inputEmail, inputPassword, setCurrentUser } from "./loginSlice"
+import { storeAccessToken , storeRefreshToken } from "../../store/authSlice";
+import { getCookie, setCookie } from "../../utils/cookie";
 import './Login.css'
 
 function Login() {
     const email = useSelector((state) => state.login.email);
     const password = useSelector((state) => state.login.password);
     const loginErrMsg = useSelector((state) => state.login.loginErrMsg);
+ //   const currentUser = useSelector((state) => state.login.currentUser);
+    const accessToken = useSelector((state)=> state.auth.accessToken);
+
     const dispatch = useDispatch();
     
     const  data = JSON.stringify({   
@@ -20,16 +24,17 @@ function Login() {
     const navigate = useNavigate();
     const onLoginSuccess = (res) => {
         if (res.data.status === 'OK'){
-            const {accessToken} =  res.data.data.accessToken;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            dispatch(storeAccessToken(res.data.data.accessToken));
+            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.refreshToken}`;
             setCookie('refreshToken', res.data.data.refreshToken , {
-                httpOnly: true,
+                //httpOnly: true,
                 path: "/",
-                secure: true,
-                sameSite: "None"}); 
-            console.log(getCookie("refreshToken"));
+                //sameSite: "None"
+            }
+                ); 
+            dispatch(setCurrentUser(email));
             navigate("/")
-        }
+        }   
     }
    
     const postLogin = async () => {
@@ -37,11 +42,11 @@ function Login() {
              ,   { 
                 headers: {
                 'Content-Type': 'application/json'
-            }
+            }, withCredentials: true
         })
             .then(onLoginSuccess)
             .then(err => {
-               console.log(err);
+               
             })
     }
 

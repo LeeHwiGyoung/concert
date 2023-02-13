@@ -1,5 +1,5 @@
 import { useEffect , useRef } from 'react';
-import './css/modal.css'
+import './modal.css'
 function CalendarModal ({closeModal, title , children}) {
     const modalRef = useRef();
     useEffect ( ()=> {
@@ -39,7 +39,7 @@ function CalendarModal ({closeModal, title , children}) {
                     {children}
                 </div>
                 <div className="modalFooter"> 공연 후기 게시판</div>
-            </div>
+            </div> 
     )
 }
 

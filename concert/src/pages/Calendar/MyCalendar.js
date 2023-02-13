@@ -3,7 +3,7 @@ import interactionPlugin from "@fullcalendar/interaction"
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { createElement, useEffect, useState } from "react";
 import CalendarModal from "./CalendarModal";
-import mocksdata from './MOCK_DATA.json';
+import mocksdata from '../../assets/MOCK_DATA.json';
 
 function MyCalendar() {
     const [event , setEvents] = useState([]);

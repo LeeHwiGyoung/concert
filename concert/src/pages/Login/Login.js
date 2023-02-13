@@ -1,38 +1,52 @@
 import axios from "axios";
 import {  useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import './css/Login.css'
+import { inputEmail, inputPassword, setCurrentUser } from "./loginSlice"
+import { storeAccessToken , storeRefreshToken } from "../../store/authSlice";
+import { getCookie, setCookie } from "../../utils/cookie";
+import './Login.css'
 
 function Login() {
-    const [email, setEmail] = useState("") 
-    const [password, setPassword] = useState("")
-    const [loginErrMsg , setLoginErrMsg] = useState(false) 
+    const email = useSelector((state) => state.login.email);
+    const password = useSelector((state) => state.login.password);
+    const loginErrMsg = useSelector((state) => state.login.loginErrMsg);
+ //   const currentUser = useSelector((state) => state.login.currentUser);
+    const accessToken = useSelector((state)=> state.auth.accessToken);
+
+    const dispatch = useDispatch();
+    
     const  data = JSON.stringify({   
         "userEmail" : email,
         "password" : password 
     });
 
     const navigate = useNavigate();
-
+    const onLoginSuccess = (res) => {
+        if (res.data.status === 'OK'){
+            dispatch(storeAccessToken(res.data.data.accessToken));
+            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.refreshToken}`;
+            setCookie('refreshToken', res.data.data.refreshToken , {
+                //httpOnly: true,
+                path: "/",
+                //sameSite: "None"
+            }
+                ); 
+            dispatch(setCurrentUser(email));
+            navigate("/")
+        }   
+    }
+   
     const postLogin = async () => {
         axios.post("http://3.37.69.149:8080/users/login", data
              ,   { 
                 headers: {
                 'Content-Type': 'application/json'
-            }
+            }, withCredentials: true
         })
-            .then(res =>  {
-                console.log(res)
-                console.log(res.data)
-                if(res.data.status === 'OK'){
-                    localStorage.setItem('accesstoken' , res.data.data.accessToken);
-                    localStorage.setItem('expiredTime', res.data.data.expiredTime);
-                    localStorage.setItem('refreshToken', res.data.data.refreshToken); 
-                    navigate("/")
-                }
-            })
+            .then(onLoginSuccess)
             .then(err => {
-               console.log(err);
+               
             })
     }
 
@@ -45,11 +59,11 @@ function Login() {
 
 
     const handleEmail = (event) => {    
-        setEmail(event.target.value);
+        dispatch(inputEmail(event.target.value));
     }
     
     const handlePassword = (event) =>{
-        setPassword(event.target.value);
+        dispatch(inputPassword(event.target.value));
     }
 
 
@@ -89,3 +103,6 @@ function Login() {
   }
   
   export default Login;
+
+
+  

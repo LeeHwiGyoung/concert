@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { inputEmail, inputPassword, setCurrentUser } from "./loginSlice"
 import { storeAccessToken , storeRefreshToken } from "../../store/authSlice";
 import { getCookie, setCookie } from "../../utils/cookie";
+import { Link } from "react-router-dom";
 import './Login.css'
 
 function Login() {
@@ -69,7 +70,9 @@ function Login() {
 
     return (
         <div id = "loginWrap">
-            <h1>로그인</h1>
+            <Link to = "/">
+                <img className="loginLogo" src = "Images/logo.png" alt = ""/>
+            </Link>
             <form id = "loginForm">
                 <input type = "text" id = "idInput" placeholder="Email"  onChange = {handleEmail}/>
                 <br/>

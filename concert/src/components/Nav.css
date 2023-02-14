@@ -1,23 +1,47 @@
 .nav {
-
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.35);
+}
+.navContainer {
+    display: flex;
+    margin: 0px 200px 0px 200px;
+    padding : 8px;
+    align-items: center;
 }
 
-.nav > ul {
-    list-style: none;
-    display : flex;
+.navMenu {
+    display: flex;
     flex-direction: row;
-    justify-content: center;
+    list-style: none;
+    padding: 10px;
+    align-items: center;
+    margin : 0px;
 }
 
-.nav > ul > li {
-    margin : 0 5%
+.navItem {
+    margin : 0 20px 0 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.nav > ul  :hover {
-    
+.navLink {
+    text-decoration: none;
+}
+
+.navLogo {
+    height: 32px;
+    margin: 5px 20px 5px 0;
 }
 
 .community{
     cursor: pointer;
+    color : rgba(220,42,42,0.9);
 }
 
+.fixedNav {
+    position: fixed;
+    color:white;
+    background-color: black;
+    top : 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}

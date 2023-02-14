@@ -5,6 +5,7 @@ import { isAuth } from "../../utils/JwtUtils";
 function Mypage ()  {
     const accessToken = useSelector((state) => state.auth.accessToken);
     const navigate = useNavigate();
+    
     useEffect(() =>{
         console.log("myPage", accessToken);
         if(isAuth(accessToken)){

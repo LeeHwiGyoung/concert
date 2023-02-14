@@ -1,5 +1,4 @@
 import './Home.css';
-import MyCalendar from '../Calendar/MyCalendar';
 import Nav from '../../components/Nav.js';
 import Poster from '../../components/Poster.js';
 import Header from '../../components/Header.js';
@@ -21,10 +20,6 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleMyPage = () => {
-    navigate("mypage");
-  }
-  
   const handleLogOut = () => {
     dispatch(resetAccessToken());
     removeCookie("refreshToken");
@@ -42,17 +37,8 @@ function Home() {
 
     return (
       <div id = "wrap">
-        <Header>
-          <ul>
-            {!currentUser ? <li><a href = "login">로그인</a></li> : currentUser&&<li><p onClick = {handleLogOut}>로그아웃</p></li>}
-            {!currentUser ? <li><a href = "join">회원가입</a></li> : <li><p onClick={handleMyPage}> 마이페이지 </p></li>}
-          </ul>
-          <div>
-             <h1 className="mainTitle" onClick={() => navigate("/")}>Home</h1>
-          </div>
-        </Header> 
-        <Nav />
-        <MyCalendar />
+        <div className ="blankPage">
+        </div>
         <Poster />
       </div>
     );

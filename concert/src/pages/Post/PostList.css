@@ -1,0 +1,14 @@
+.postTable {
+    margin : 0 auto;
+    width :  1000px;
+    text-align: center;
+}
+
+.postNumber {
+    border-bottom: 1px solid black;
+}
+
+.postTitle {
+    border-bottom: 1px solid black;
+}
+

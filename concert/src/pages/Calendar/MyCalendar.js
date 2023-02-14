@@ -2,6 +2,7 @@ import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction"
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { createElement, useEffect, useState } from "react";
+import './Calendar.css'
 import CalendarModal from "./CalendarModal";
 import mocksdata from '../../assets/MOCK_DATA.json';
 
@@ -49,8 +50,8 @@ function MyCalendar() {
     }, [] );
 
     return (
-        <>
-            <FullCalendar    
+        <div className = "calendarContainer">
+            <FullCalendar   
                 initialView="dayGridMonth" 
                 plugins={[ dayGridPlugin , interactionPlugin ]}
                 timeZone = 'Asia/Seoul'
@@ -69,7 +70,7 @@ function MyCalendar() {
                      <p> 예매 사이트 : </p>
                 </div> 
             </CalendarModal>}
-        </>
+        </div>
     )
 
 }

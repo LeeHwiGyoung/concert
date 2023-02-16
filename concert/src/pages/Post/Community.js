@@ -2,10 +2,9 @@ import Nav from '../../components/Nav';
 import postDummyData from '../../assets/postdummy.json';
 import './Community.css'
 import { useEffect, useState } from 'react';
-import PostListItem from './PostListItem';
 import PostList from './PostList';
 
-function Community(){
+function Community({communityName}){
     const [post,setPost] = useState([]);
     
     useEffect( () => {
@@ -16,9 +15,10 @@ function Community(){
     //{post.map((item) => <PostListItem postId ={item.id} postTitle = {item.post_title} postContent = {item.post_content}/>)}
     return (
         <div className = "communityContainer">
-            <div className = "communityContainers">
-            {post.map((item) => <PostListItem postId ={item.id} postTitle = {item.post_title} postContent = {item.post_content}/>)}
+            <div className = "communityName">
+                {communityName}
             </div>
+            <PostList data = {post}/>
         </div>
     )
 }

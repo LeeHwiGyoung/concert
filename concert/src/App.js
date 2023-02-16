@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route element = {<Layout/>}>
         <Route path="/" element = {<Home />}/>
-        <Route path = "Community" element = {<Community/>} />
+        <Route path = "Community" element = {<Community communityName = {"공연 후기 게시판"}/>} />
         <Route path = "Calendar" element ={ <MyCalendar/>}/>
       </Route>
       <Route path="login" element = {<Login />} />
